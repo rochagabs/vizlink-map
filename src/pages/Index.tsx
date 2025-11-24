@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { DependencyGraph } from '@/components/DependencyGraph';
 import { DependencyCard } from '@/components/DependencyCard';
 import { DependencyDetails } from '@/components/DependencyDetails';
+import { ChatButton } from '@/components/ChatButton';
+import { ChatPopup } from '@/components/ChatPopup';
 import { mockNodes, mockConnections } from '@/data/mockDependencies';
 import { DependencyNode } from '@/types/dependency';
 import { Network, Search, Filter, Download } from 'lucide-react';
@@ -13,6 +15,7 @@ const Index = () => {
   const [selectedNode, setSelectedNode] = useState<DependencyNode | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<string | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const filteredNodes = mockNodes.filter(node => {
     const matchesSearch = node.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -146,6 +149,9 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      <ChatButton isOpen={isChatOpen} onClick={() => setIsChatOpen(!isChatOpen)} />
+      {isChatOpen && <ChatPopup />}
     </div>
   );
 };
